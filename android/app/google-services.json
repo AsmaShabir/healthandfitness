@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "990938651117",
+    "project_id": "healthfitness-30e3e",
+    "storage_bucket": "healthfitness-30e3e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:990938651117:android:ad084b3fd660a80238efe4",
+        "android_client_info": {
+          "package_name": "com.example.healthandf"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-_Iv96089iNBzlNCEcb3OfQRP_oAx_D8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
