@@ -19,7 +19,7 @@ class HomeView extends StatelessWidget {
             Text('Blood Glucose: ${healthViewModel.healthData?.bloodGlucose ?? 0.0}'),
             ElevatedButton(
               onPressed: () {
-                healthViewModel.getData();
+                healthViewModel.healthFunc();
               },
               child: Text('Get Health Data'),
             ),
