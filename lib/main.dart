@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:healthandfitness/utils/routes/routes.dart';
 import 'package:healthandfitness/utils/routes/routes_name.dart';
 import 'package:healthandfitness/view/home_view.dart';
+import 'package:healthandfitness/view_model/auth_view_model.dart';
 import 'package:healthandfitness/view_model/health_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +22,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers:[
           ChangeNotifierProvider(create: (_)=>HealthViewModel()),
+          ChangeNotifierProvider(create: (_)=>AuthViewModel()),
+
 
 
         ],
@@ -31,7 +34,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          initialRoute:routesName.home ,
+          initialRoute:routesName.signup ,
           onGenerateRoute: routes.generateRoute,
         )
     );

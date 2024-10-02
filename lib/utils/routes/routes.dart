@@ -16,13 +16,12 @@ class routes{
     switch(settings.name){
       case routesName.splash:
         return MaterialPageRoute(builder: (BuildContext context)=>SplashView());
-      case routesName.home:
-        return MaterialPageRoute(builder: (BuildContext context)=>HomeView());
-
       case routesName.login:
         return MaterialPageRoute(builder: (BuildContext context)=>loginView());
       case routesName.signup:
         return MaterialPageRoute(builder: (BuildContext context)=>signUpView());
+      case routesName.home:
+        return MaterialPageRoute(builder: (BuildContext context)=>HomeView());
       default:
         return MaterialPageRoute(builder: (_){
           return Scaffold(
