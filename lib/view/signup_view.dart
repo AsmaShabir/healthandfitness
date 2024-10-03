@@ -68,7 +68,9 @@ class _signUpViewState extends State<signUpView> {
                 // }
                   final user= await authViewModel.signUp(email, password,name);
                   if(user!=null){
-                    routesName.home;
+                    Navigator.pushNamed(context, routesName.home);
+                    Utils.flushBarErrorMessage('Logged in Successfully', context);
+
                   }
                   else{
                     Utils.flushBarErrorMessage('fill all the fields', context);
@@ -80,7 +82,8 @@ class _signUpViewState extends State<signUpView> {
           SizedBox(height: 15,),
           TextButton(
               onPressed: (){
-              routesName.login;
+                Navigator.pushNamed(context, routesName.login);
+
               },
               child: Text("Don't have an account? Sign up"),
           )

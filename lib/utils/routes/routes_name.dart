@@ -9,7 +9,7 @@ class routesName{
 
 // home routes name
   static const String home ='home_view';
-  static const String view ='thisView';
+  static const String activity ='Activity';
 
 
 }

@@ -2,6 +2,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:healthandfitness/view/home_view.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/routes/routes_name.dart';
@@ -50,8 +51,9 @@ class _loginViewState extends State<loginView> {
               final password=passController.text.trim().toString();
                 final user= await authViewModel.login(email, password);
                 if(user!=null){
-                  print('Sign up successful');
-                  routesName.home;
+                  print('Sign in successful');
+                  Navigator.pushNamed(context, routesName.home);
+
                 }
                 else{
 
@@ -65,7 +67,8 @@ class _loginViewState extends State<loginView> {
           SizedBox(height: 15,),
           TextButton(
             onPressed: (){
-              routesName.signup;
+              Navigator.pushNamed(context, routesName.signup);
+
             },
             child: Text('Already have an account? Login'),
           )

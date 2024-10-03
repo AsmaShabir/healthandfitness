@@ -28,7 +28,7 @@ class AuthViewModel with ChangeNotifier{
        await _firestore.collection('users').doc(user.uid).set({
         'uid':user.uid,
         'email':user.email,
-        'name':user.displayName,
+        'name':name,
         'imageUrl':user.photoURL,
       });
     }

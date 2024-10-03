@@ -16,6 +16,13 @@ class HealthViewModel with ChangeNotifier {
     var types = [
       HealthDataType.STEPS,
       HealthDataType.BLOOD_GLUCOSE,
+      HealthDataType.HEART_RATE,
+      HealthDataType.ACTIVE_ENERGY_BURNED,
+      HealthDataType.TOTAL_CALORIES_BURNED,
+      HealthDataType.DISTANCE_WALKING_RUNNING,
+
+
+
     ];
 
     // Request access to the data types before reading them
