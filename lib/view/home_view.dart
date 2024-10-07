@@ -2,12 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healthandfitness/utils/routes/routes_name.dart';
-import 'package:healthandfitness/view/progress_view.dart';
-import 'package:healthandfitness/view/quick_actions.dart';
-
-import 'Activity.dart';
-import 'goals.dart';
-import 'health_metrics.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -46,9 +40,9 @@ class _HomeViewState extends State<HomeView> {
                                          ],
                                        ),
                                      SizedBox(height: 20,),
-                                     Text('Welcome, Asma',style: GoogleFonts.poppins(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
+                                     Text('Welcome, Asma',style: GoogleFonts.azeretMono(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
                                      SizedBox(height: 7,),
-                                     Text('Choose your workout',style: GoogleFonts.poppins(color: Colors.white60,fontSize:12,fontWeight: FontWeight.bold),),
+                                     Text('Choose your workout',style: GoogleFonts.azeretMono(color: Colors.white60,fontSize:12,fontWeight: FontWeight.bold),),
                                        SizedBox(height: 20,),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -58,7 +52,7 @@ class _HomeViewState extends State<HomeView> {
                                             child: MaterialButton(
                                                 color: Colors.white60.withOpacity(.3),
                                                 onPressed: (){},
-                                                child: Text('Categories',style: GoogleFonts.poppins(color: Colors.white),),
+                                                child: Text('Categories',style: GoogleFonts.azeretMono(color: Colors.white),),
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius: BorderRadius.circular(30.0),
 
@@ -69,8 +63,11 @@ class _HomeViewState extends State<HomeView> {
                                             height: 40,
                                             child: MaterialButton(
                                                 color: Color(0xFFFd8efff),
-                                                onPressed: (){},
-                                                child: Text('Your Session',style: GoogleFonts.poppins(color: Color(0xFFF1f305c)),),
+                                                onPressed: (){
+                                                  Navigator.pushNamed(context, routesName.details);
+
+                                                },
+                                                child: Text('Add Details',style: GoogleFonts.azeretMono(color: Color(0xFFF1f305c)),),
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius: BorderRadius.circular(30.0),
 
@@ -93,31 +90,36 @@ class _HomeViewState extends State<HomeView> {
                        borderRadius: BorderRadius.only(topRight: Radius.elliptical(170, 200))),),),
              ],),
              Positioned(
-               top: 250,
+               top: 235,
                child: Padding(
                  padding: const EdgeInsets.all(10.0),
                  child: Column(
                    children: [
 
-                   // ActivitySummaryCard(),
-                   // HealthMetricsCard(),
-                   // GoalsCard(),
-                   // QuickActionsRow(),
-                   // ProgressVisualization(),
                   InkWell(
                     onTap: (){
                       Navigator.pushNamed(context, routesName.activity);
                     },
                       child: CategoryCards('assets/images/activity.png', 'Today Activity')),
                      SizedBox(height: 30,),
-                     CategoryCards('assets/images/healthmetrix.png', 'Health Metrics'),
+                     InkWell(
+                         onTap: (){
+                           Navigator.pushNamed(context, routesName.healthMetrics);
+                         },
+                         child: CategoryCards('assets/images/healthmetrix.png', 'Health Metrics')),
                      SizedBox(height: 30,),
-                     CategoryCards('assets/images/goals.png', 'Make Goals'),
-                     // SizedBox(height: 30,),
-                     // CategoryCards('assets/images/health.png', 'Quick Actions'),
+                     InkWell(
+                         onTap: (){
+                           Navigator.pushNamed(context, routesName.goals);
+                         },
+                         child: CategoryCards('assets/images/goals.png', 'Make Goals')),
+
                      SizedBox(height: 30,),
-                     CategoryCards('assets/images/progress.png', 'Your Progress'),
-                     // SizedBox(height: 30,),
+                     InkWell(
+                         onTap: (){
+                           Navigator.pushNamed(context, routesName.progress);
+                         },
+                         child: CategoryCards('assets/images/health.png', 'Your Progress')),
 
 
                  ],),
@@ -200,14 +202,14 @@ class _HomeViewState extends State<HomeView> {
 
 
 
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home,color:Color(0xFFF1f305c) ,), label: "Home",),
-          BottomNavigationBarItem(icon: Icon(Icons.fitness_center,color:Color(0xFFF1f305c)), label: "Workout"),
-          BottomNavigationBarItem(icon: Icon(Icons.person,color:Color(0xFFF1f305c)), label: "Profile"),
-        ],
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   backgroundColor: Colors.white,
+      //   items: [
+      //     BottomNavigationBarItem(icon: Icon(Icons.home,color:Color(0xFFF1f305c) ,), label: "Home",),
+      //     BottomNavigationBarItem(icon: Icon(Icons.fitness_center,color:Color(0xFFF1f305c)), label: "Workout"),
+      //     BottomNavigationBarItem(icon: Icon(Icons.person,color:Color(0xFFF1f305c)), label: "Profile"),
+      //   ],
+      // ),
     );
   }
   Widget CategoryCards(String imageUrl, String label) {

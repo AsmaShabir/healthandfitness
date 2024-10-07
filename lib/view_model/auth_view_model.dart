@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:healthandfitness/model/auth_model.dart';
 
 class AuthViewModel with ChangeNotifier{
@@ -60,6 +61,7 @@ class AuthViewModel with ChangeNotifier{
       throw e;
     }
     }
+
     Future<void>signOut()async{
     await _auth.signOut();
     }

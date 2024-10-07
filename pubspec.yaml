@@ -49,6 +49,9 @@ dependencies:
   google_generative_ai: ^0.4.6
   permission_handler: ^11.3.1
   change_app_package_name: ^1.4.0
+  fl_chart: ^0.69.0
+  another_flutter_splash_screen: ^1.2.1
+
 
 
 
