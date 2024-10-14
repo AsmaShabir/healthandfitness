@@ -114,15 +114,13 @@ class _signUpViewState extends State<signUpView> {
                                   final email=emailController.text.trim().toString();
                                         final name=nameController.text.trim().toString();
                                         final password=passController.text.trim().toString();
-                                          final user= await authViewModel.signUp(email, password,name);
-                                          if(user!=null){
+                                          final user= await authViewModel.signup(email, password,name,context);
+
                                             Navigator.pushNamed(context, routesName.home);
                                             Utils.flushBarErrorMessage('Logged in Successfully', context);
         
-                                          }
-                                          else{
-                                            Utils.flushBarErrorMessage('fill all the fields', context);
-                                          }
+
+
         
         
                                 },

@@ -102,16 +102,12 @@ class _loginViewState extends State<loginView> {
                               onPressed: ()async{
                                 final email=emailController.text.trim().toString();
                                 final password=passController.text.trim().toString();
-                                  final user= await authViewModel.login(email, password);
-                                  if(user!=null){
-                                    print('Sign in successful');
+                                  final user= await authViewModel.login(email, password,context);
+
+                                    Utils.snackBar('logged in successfully', context);
                                     Navigator.pushNamed(context, routesName.home);
         
-                                  }
-                                  else{
-        
-                                    Utils.flushBarErrorMessage('invalid Input', context);
-                                  }
+
         
         
                               },
@@ -141,17 +137,11 @@ class _loginViewState extends State<loginView> {
                     SizedBox(height: 15,),
                     TextButton(
                       onPressed: ()async{
-                        User? user = await authService.signInWithGoogle();
+                        UserCredential? userCredential = (await authService.handleGoogleButtonClick(context));
+                        await  authViewModel.fetchData();
+                        // Navigate to home screen if sign-in is successful
+                        Navigator.pushNamed(context, routesName.home);
 
-                        if (user != null) {
-                          // Navigate to home screen if sign-in is successful
-                          Navigator.pushReplacementNamed(context, routesName.home);
-                        } else {
-                          // Show error or handle failed sign-in
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Failed to sign in')),
-                          );
-                        }
 
                       },
                       child: Row(

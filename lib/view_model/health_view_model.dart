@@ -15,7 +15,10 @@ class HealthViewModel with ChangeNotifier {
   double? _distanceWalked = 0.0;
   double? _weight; // User's weight in kg
   double? _strideLength; // Stride length
-  double? _height; // User's weight in kg
+  double? _height; // User's height in cm
+  String? _gender;
+  double? _sleepAwake;
+  double? _sleepAsleep;
 
   int? get steps => _steps;
   double? get bloodGlucose => _bloodGlucose;
@@ -24,31 +27,41 @@ class HealthViewModel with ChangeNotifier {
   double? get distanceWalked => _distanceWalked;
   double? get weight => _weight;
   double? get height => _height;
+  String? get gender => _gender;
+  double? get sleepAwake => _sleepAwake;
+  double? get sleepAsleep => _sleepAsleep;
 
+  // New getter for total sleep hours
+  double? get totalSleepHours {
+    if (_sleepAsleep != null && _sleepAwake != null) {
+      // Calculate total sleep time in hours
+      return (_sleepAsleep! + _sleepAwake!) / 60; // Assuming _sleepAsleep and _sleepAwake are in minutes
+    }
+    return null; // Return null if not available
+  }
 
   HealthViewModel() {
     loadPreferences(); // Load preferences when the ViewModel is created
     fetchSteps();
-    healthFunc(); // Fetch steps when the ViewModel is created
+    healthFunc(); // Fetch health data when the ViewModel is created
   }
 
   Future<void> loadPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     _weight = prefs.getDouble('weight') ?? 70.0; // Default weight
     _strideLength = prefs.getDouble('strideLength') ?? 0.78; // Default stride length
-    _height = prefs.getDouble('height') ?? 0.0; // Default stride length
+    _height = prefs.getDouble('height') ?? 0.0; // Default height
 
     notifyListeners(); // Notify listeners for any UI updates
   }
 
-  Future<void> savePreferences(double newWeight,double newheight) async {
+  Future<void> savePreferences(double newWeight, double newHeight) async {
     final prefs = await SharedPreferences.getInstance();
     _weight = newWeight;
-    // _strideLength = newStrideLength;
-    _height =newheight;
+    _height = newHeight;
     await prefs.setDouble('weight', _weight!); // Save weight to preferences
     await prefs.setDouble('strideLength', _strideLength!); // Save stride length to preferences
-    await prefs.setDouble('height', _height!); // Save stride length to preferences
+    await prefs.setDouble('height', _height!); // Save height to preferences
 
     notifyListeners();
   }
@@ -119,7 +132,7 @@ class HealthViewModel with ChangeNotifier {
 
       // Prepare the data to store in Firestore
       Map<String, dynamic> healthData = {
-        'steps': _steps, // Add more fields as needed
+        'steps': _steps,
         'calories_burned': _caloriesBurned,
         'distance_walked': _distanceWalked,
         'timestamp': FieldValue.serverTimestamp(), // Save the time of data entry
@@ -142,6 +155,8 @@ class HealthViewModel with ChangeNotifier {
       HealthDataType.ACTIVE_ENERGY_BURNED,
       HealthDataType.TOTAL_CALORIES_BURNED,
       HealthDataType.DISTANCE_WALKING_RUNNING,
+      HealthDataType.SLEEP_ASLEEP,
+      HealthDataType.SLEEP_AWAKE,
     ];
 
     bool requested = await health.requestAuthorization(types);
@@ -171,6 +186,10 @@ class HealthViewModel with ChangeNotifier {
             _caloriesBurned = dataPoint.value as double?;
           } else if (dataPoint.type == HealthDataType.DISTANCE_WALKING_RUNNING) {
             _distanceWalked = dataPoint.value as double?;
+          } else if (dataPoint.type == HealthDataType.SLEEP_AWAKE) {
+            _sleepAwake = dataPoint.value as double?;
+          } else if (dataPoint.type == HealthDataType.SLEEP_ASLEEP) {
+            _sleepAsleep = dataPoint.value as double?;
           }
         }
 
@@ -190,10 +209,29 @@ class HealthViewModel with ChangeNotifier {
       double strideLength = calculateStrideLength(height, gender);
       _strideLength = strideLength;
       // Save the stride length to preferences for persistence
-      savePreferences(_weight!,_height!);
+      savePreferences(_weight!, _height!);
       print('Calculated Stride Length: $_strideLength meters');
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future<void> checkHealthConnectAvailability() async {
+    try {
+      // Check if Health Connect is available
+      bool isAvailable = await health.isHealthConnectAvailable();
+
+      if (!isAvailable) {
+        // Health Connect is not available, prompt user to install
+        print("Google Health Connect is not available on this device.");
+        await health.installHealthConnect(); // This opens the Play Store to install Health Connect
+      } else {
+        // Health Connect is available, proceed with your health data logic
+        print("Health Connect is available.");
+      }
+    } catch (e) {
+      // Handle the exception gracefully
+      print("Error checking Health Connect availability: $e");
     }
   }
 }

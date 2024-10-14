@@ -2,6 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healthandfitness/utils/routes/routes_name.dart';
+import 'package:healthandfitness/view_model/auth_view_model.dart';
+import 'package:healthandfitness/view_model/services/auth_services.dart';
+import 'package:healthandfitness/view_model/userDetails_view_model.dart';
+import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -9,8 +13,12 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  userDetailsModel UserDetails =userDetailsModel();
+
+  AuthService authService =AuthService();
   @override
   Widget build(BuildContext context) {
+  final pr= Provider.of<AuthViewModel>(context);
     return Scaffold(
     backgroundColor: Colors.white,
        body:
@@ -34,15 +42,27 @@ class _HomeViewState extends State<HomeView> {
                                        Row(
                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                          children: [
-                                           Icon(Icons.arrow_back,color: Colors.white,),
-                                           Icon(Icons.arrow_forward,color: Colors.white,),
+                                           InkWell(
+                                             onTap: (){
+                                              authService.signOutGoogle(context);
+                                             },
+                                               child: Icon(Icons.logout_outlined,color: Colors.white,)),
+                                           pr.imageUrl==''?CircleAvatar(
+                                             radius: 20,
+                                               backgroundColor: Colors.white,
+                                               child: Icon(Icons.person,color:Color(0xFFF1f305c) ,)):
+                                           CircleAvatar(
+                                             radius: 20,
+                                               backgroundImage: NetworkImage(pr.imageUrl.toString()),
+                                             backgroundColor: Colors.white,
+
+                                           ),
 
                                          ],
                                        ),
                                      SizedBox(height: 20,),
-                                     Text('Welcome, Asma',style: GoogleFonts.azeretMono(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
-                                     SizedBox(height: 7,),
-                                     Text('Choose your workout',style: GoogleFonts.azeretMono(color: Colors.white60,fontSize:12,fontWeight: FontWeight.bold),),
+                                     Text('Welcome,'+pr.name.toString(),style: GoogleFonts.azeretMono(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),), SizedBox(height: 7,),
+                                     Text('Choose your category',style: GoogleFonts.azeretMono(color: Colors.white60,fontSize:12,fontWeight: FontWeight.bold),),
                                        SizedBox(height: 20,),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

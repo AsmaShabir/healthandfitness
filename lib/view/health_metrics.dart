@@ -44,7 +44,7 @@ class HealthMetricsCard extends StatelessWidget {
                              return Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
-                                  _buildHealthMetricItem("Heart Rate",healthViewModel.heartRate!.toStringAsFixed(1) )
+                                  _buildHealthMetricItem("Heart Rate",healthViewModel.heartRate!.toStringAsFixed(1)+'bpm' )
                               ]
                               );
                             }
@@ -58,12 +58,19 @@ class HealthMetricsCard extends StatelessWidget {
                           children: [
                             Text("Sleep:",style: GoogleFonts.poppins(color: Color(0xFFF1f305c),fontSize: 13,fontWeight: FontWeight.w500),),
                             SizedBox(height: 8.0),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                _buildHealthMetricItem("Sleep", "6h 45m"),
+                            Consumer(
+                               builder: (context, healthViewModel, child) {
+                                 return Row(
+                                   mainAxisAlignment: MainAxisAlignment
+                                       .spaceAround,
+                                   children: [
+                                     _buildHealthMetricItem("Sleep",
+                                         healthViewModel.totalSleepHours!.toStringAsFixed(2)),
 
-                              ],
+                                   ],
+                                 );
+
+                               }
                             )
                           ],
                         ),
@@ -78,7 +85,7 @@ class HealthMetricsCard extends StatelessWidget {
                                return Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
-                                    _buildHealthMetricItem("Weight", healthViewModel.weight!.toStringAsFixed(1)),
+                                    _buildHealthMetricItem("Weight", healthViewModel.weight!.toStringAsFixed(1)+'kg'),
 
                                   ],
                                 );
